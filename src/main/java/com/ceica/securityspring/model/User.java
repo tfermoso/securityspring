@@ -66,4 +66,15 @@ public class User {
     public void setAuthorities(Collection<Authority> authorities) {
         this.authorities = authorities;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", authorities=" + authorities +
+                '}';
+    }
 }
