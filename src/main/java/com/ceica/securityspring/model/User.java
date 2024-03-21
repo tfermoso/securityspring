@@ -17,6 +17,7 @@ public class User {
     private Integer id;
     private String username;
     private String password;
+    @Column(name = "enabled")
     private Boolean enabled;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
