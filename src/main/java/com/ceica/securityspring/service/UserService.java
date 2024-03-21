@@ -17,10 +17,12 @@ import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
-    @Autowired
+
     private UserRepository userRepository;
-
-
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -41,5 +43,10 @@ public class UserService implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
         }
         return grantedAuthorities;
+    }
+
+    public void crearUsuario(User user) {
+
+       userRepository.save(user);
     }
 }
