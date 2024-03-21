@@ -3,6 +3,7 @@ package com.ceica.securityspring.model;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
@@ -48,7 +49,9 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+
+
+        this.password = (new BCryptPasswordEncoder()).encode(password);
     }
 
     public Boolean getEnabled() {

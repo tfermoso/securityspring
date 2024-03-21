@@ -2,6 +2,7 @@ package com.ceica.securityspring.service;
 
 import com.ceica.securityspring.model.Authority;
 import com.ceica.securityspring.model.User;
+import com.ceica.securityspring.repository.AuthorityRepository;
 import com.ceica.securityspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,9 +20,11 @@ import java.util.List;
 public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
+    private AuthorityRepository authorityRepository;
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
+        this.authorityRepository=authorityRepository;
     }
 
     @Override
@@ -47,6 +50,10 @@ public class UserService implements UserDetailsService {
 
     public void crearUsuario(User user) {
 
-       userRepository.save(user);
+       User newUser=userRepository.save(user);
+       Authority authority=new Authority();
+       authority.setAuthority("USER");
+       authority.setUser_id(newUser.getId());
+        authorityRepository.save(authority);
     }
 }

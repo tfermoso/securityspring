@@ -6,8 +6,9 @@ import jakarta.persistence.*;
 @Table(name="authority")
 public class Authority {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer user_id;
 
     private String authority;
 
@@ -28,5 +29,13 @@ public class Authority {
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 }
