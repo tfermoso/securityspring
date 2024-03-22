@@ -16,9 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig {
 
     private final UserService userService;
+    private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+
     @Autowired
-    public SecurityConfig(UserService userService){
+    public SecurityConfig(UserService userService,CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler){
         this.userService = userService;
+        this.authenticationSuccessHandler=customAuthenticationSuccessHandler;
     }
 
 /*
@@ -27,7 +30,7 @@ public class SecurityConfig {
     }
 */
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -41,6 +44,7 @@ public class SecurityConfig {
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .successHandler(authenticationSuccessHandler)
                         .permitAll()
                 )
                 .logout((logout) -> logout.permitAll());

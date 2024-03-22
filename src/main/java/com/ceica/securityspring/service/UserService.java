@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,10 +22,12 @@ public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
+    private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     public UserService(UserRepository userRepository,AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
         this.authorityRepository=authorityRepository;
+        passwordEncoder=new BCryptPasswordEncoder();
     }
 
     @Override
@@ -51,6 +54,8 @@ public class UserService implements UserDetailsService {
     public void crearUsuario(User user) {
 
        User newUser=userRepository.save(user);
+       //Encriptamos password
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
        Authority authority=new Authority();
        authority.setAuthority("USER");
        authority.setUser_id(newUser.getId());
