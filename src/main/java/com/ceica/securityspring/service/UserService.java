@@ -52,10 +52,10 @@ public class UserService implements UserDetailsService {
     }
 
     public void crearUsuario(User user) {
-
+        //Encriptamos password
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
        User newUser=userRepository.save(user);
-       //Encriptamos password
-        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+
        Authority authority=new Authority();
        authority.setAuthority("USER");
        authority.setUser_id(newUser.getId());
