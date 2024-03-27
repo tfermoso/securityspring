@@ -18,8 +18,11 @@ public class User {
     private Integer id;
     private String username;
     private String password;
+    private String foto;
     @Column(name = "enabled")
     private Boolean enabled;
+
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -79,5 +82,13 @@ public class User {
                 ", enabled=" + enabled +
                 ", authorities=" + authorities +
                 '}';
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }
